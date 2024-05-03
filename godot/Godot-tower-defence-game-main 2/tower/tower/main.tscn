@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6nuv32wlfaoi"]
+[gd_scene load_steps=13 format=3 uid="uid://b6nuv32wlfaoi"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_cnmye"]
 [ext_resource type="PackedScene" uid="uid://di665p3dxwouq" path="res://levels/level_test.tscn" id="2_7ojip"]
@@ -6,7 +6,12 @@
 [ext_resource type="Script" path="res://StartButton.gd" id="4_c8lho"]
 [ext_resource type="Script" path="res://CanvasLayer.gd" id="4_wkdkc"]
 [ext_resource type="Script" path="res://Top level scripts/MainMenu.gd" id="6_af0ad"]
+[ext_resource type="Script" path="res://how to play.gd" id="7_syp3v"]
+[ext_resource type="Script" path="res://levels/Label.gd" id="8_nywqh"]
 [ext_resource type="Script" path="res://gameover.gd" id="8_v8lu2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_fla47"]
+font_size = 20
 
 [sub_resource type="LabelSettings" id="LabelSettings_xlu6g"]
 font_size = 50
@@ -14,8 +19,11 @@ shadow_size = 15
 shadow_color = Color(0.0588235, 0.0588235, 0.0588235, 0.858824)
 shadow_offset = Vector2(2.96, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_o60gi"]
-font_size = 64
+[sub_resource type="LabelSettings" id="LabelSettings_gfk1v"]
+font_size = 50
+shadow_size = 15
+shadow_color = Color(0.0588235, 0.0588235, 0.0588235, 0.858824)
+shadow_offset = Vector2(2.96, 1)
 
 [node name="main" type="Node2D"]
 process_mode = 3
@@ -32,13 +40,77 @@ script = ExtResource("2_53bpf")
 layer = 10
 script = ExtResource("4_wkdkc")
 
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -288.0
+offset_right = -288.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Guide" type="PanelContainer" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.222
+anchor_right = 0.342
+anchor_bottom = 0.509
+offset_top = 155.08
+offset_right = 75.6
+offset_bottom = 157.72
+grow_horizontal = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Guide"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Guide/MarginContainer"]
+layout_mode = 2
+text = "How to play
+
+controls
+Ctrl - Pause
+1 - Tower 1
+2 - Tower 2
+
+Goal
+
+Defend the area until the timer tuns out. Buy towers to defend"
+label_settings = SubResource("LabelSettings_fla47")
+horizontal_alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_bottom = 23.0
+grow_horizontal = 0
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer" groups=["wants level resource"]]
+process_mode = 1
+layout_mode = 2
+text = "time left:"
+script = ExtResource("8_nywqh")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/PanelContainer/Label"]
+unique_name_in_owner = true
+process_mode = 1
+wait_time = 120.0
+autostart = true
+
 [node name="MainMenu" type="MarginContainer" parent="CanvasLayer"]
 unique_name_in_owner = true
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.007
-offset_top = 134.0
-offset_bottom = 0.439941
+offset_top = 152.0
+offset_bottom = 0.440063
 script = ExtResource("6_af0ad")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MainMenu"]
@@ -61,6 +133,11 @@ process_mode = 3
 layout_mode = 2
 text = "start"
 script = ExtResource("4_c8lho")
+
+[node name="how to play" type="Button" parent="CanvasLayer/MainMenu/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "how to play"
+script = ExtResource("7_syp3v")
 
 [node name="Button" type="Button" parent="CanvasLayer/MainMenu/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -88,7 +165,7 @@ size_flags_vertical = 4
 [node name="Label" type="Label" parent="CanvasLayer/GameOver/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 text = "Game Over"
-label_settings = SubResource("LabelSettings_o60gi")
+label_settings = SubResource("LabelSettings_gfk1v")
 
 [node name="retryButton" type="Button" parent="CanvasLayer/GameOver/HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -102,19 +179,9 @@ text = "Main Menu"
 layout_mode = 2
 text = "quit"
 
-[node name="Guide" type="PanelContainer" parent="CanvasLayer"]
-offset_right = 272.0
-offset_bottom = 152.0
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Guide"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Guide/MarginContainer"]
-layout_mode = 2
-text = "How to play
-"
-
+[connection signal="timeout" from="CanvasLayer/PanelContainer/Label/Timer" to="CanvasLayer/GameOver" method="win"]
 [connection signal="button_up" from="CanvasLayer/MainMenu/HBoxContainer/VBoxContainer/StartButon" to="CanvasLayer/MainMenu" method="_on_start_button_up"]
+[connection signal="button_up" from="CanvasLayer/MainMenu/HBoxContainer/VBoxContainer/how to play" to="CanvasLayer/MainMenu/HBoxContainer/VBoxContainer/how to play" method="_on_button_up"]
 [connection signal="button_up" from="CanvasLayer/GameOver/HBoxContainer/VBoxContainer/retryButton" to="CanvasLayer/GameOver" method="_on_retry_button_up"]
 [connection signal="button_up" from="CanvasLayer/GameOver/HBoxContainer/VBoxContainer/MainMenuButton" to="CanvasLayer/GameOver" method="_on_main_menu_button_up"]
 [connection signal="button_up" from="CanvasLayer/GameOver/HBoxContainer/VBoxContainer/QuitButton" to="CanvasLayer/GameOver" method="_on_quit_button_up"]

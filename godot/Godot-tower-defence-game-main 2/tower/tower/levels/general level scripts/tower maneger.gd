@@ -32,3 +32,6 @@ func spawn_tower_preview(tower_preview):
 	tower_preview_reference = instance
 	#instance.Tower_data = Tower_data
 	
+
+
+

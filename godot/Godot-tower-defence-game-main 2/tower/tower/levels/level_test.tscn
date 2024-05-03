@@ -1,16 +1,19 @@
-[gd_scene load_steps=15 format=3 uid="uid://di665p3dxwouq"]
+[gd_scene load_steps=18 format=3 uid="uid://di665p3dxwouq"]
 
 [ext_resource type="Script" path="res://levels/general level scripts/level.gd" id="1_d7imc"]
 [ext_resource type="Resource" uid="uid://bop1n53e3cacp" path="res://levels/level resourses/test_level_resource.tres" id="2_kprov"]
 [ext_resource type="Script" path="res://levels/general level scripts/money manager.gd" id="3_83um7"]
 [ext_resource type="Theme" uid="uid://b6v6h8n0gu6m" path="res://ui/resourses/level_theme.tres" id="3_dnb8h"]
 [ext_resource type="Script" path="res://levels/general level scripts/level ui.gd" id="4_m4iax"]
-[ext_resource type="Texture2D" uid="uid://b8oosejb0lltw" path="res://objects/towers/tower 1/sprites/towerDefense_tile249.png" id="4_urium"]
+[ext_resource type="Texture2D" uid="uid://dv2vklk1nvbf6" path="res://objects/towers/tower 2/sprites/TowerImg64x64.png" id="5_l3ll4"]
 [ext_resource type="Script" path="res://Button.gd" id="5_mwt7m"]
 [ext_resource type="Script" path="res://levels/general level scripts/level maneger.gd" id="7_qqoxf"]
+[ext_resource type="Resource" uid="uid://bunajfvlmlj38" path="res://objects/towers/tower 1/other resources/tower_1_data.tres" id="7_qsrye"]
 [ext_resource type="Script" path="res://levels/general level scripts/enemy maneger.gd" id="9_24thp"]
 [ext_resource type="Script" path="res://levels/general level scripts/tower maneger.gd" id="9_iqj7p"]
+[ext_resource type="Script" path="res://levels/Button2.gd" id="9_m1t40"]
 [ext_resource type="Script" path="res://levels/enemyGoal.gd" id="10_i5k55"]
+[ext_resource type="Resource" uid="uid://epdss7o2wgba" path="res://objects/towers/tower 2/other resources/tower_2_data.tres" id="10_ucp0y"]
 [ext_resource type="PackedScene" uid="uid://bjnpl4cqlbtvt" path="res://tile_map 2.tscn" id="12_cpj0q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_d7sg5"]
@@ -28,7 +31,7 @@ script = ExtResource("1_d7imc")
 level_resourse_data = ExtResource("2_kprov")
 
 [node name="UI" type="CanvasLayer" parent="."]
-layer = 2
+layer = 3
 
 [node name="level ui" type="Control" parent="UI" groups=["wants level resource"]]
 layout_mode = 3
@@ -46,6 +49,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 32
@@ -53,20 +57,25 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="Button" type="Button" parent="UI/level ui"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 164.0
-offset_top = 653.0
-offset_right = -1637.0
-offset_bottom = -355.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/level ui/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Button" type="Button" parent="UI/level ui/MarginContainer/HBoxContainer"]
+layout_mode = 2
 text = "100cr"
-icon = ExtResource("4_urium")
+icon = ExtResource("5_l3ll4")
 script = ExtResource("5_mwt7m")
+Tower_data = ExtResource("7_qsrye")
+
+[node name="Button2" type="Button" parent="UI/level ui/MarginContainer/HBoxContainer"]
+modulate = Color(1, 0.588235, 0.592157, 1)
+layout_mode = 2
+text = "150cr"
+icon = ExtResource("5_l3ll4")
+script = ExtResource("9_m1t40")
+Tower_data = ExtResource("10_ucp0y")
 
 [node name="PanelContainer" type="PanelContainer" parent="UI/level ui"]
 layout_mode = 0
@@ -75,12 +84,6 @@ offset_bottom = 50.0
 
 [node name="MarginContainer" type="MarginContainer" parent="UI/level ui/PanelContainer"]
 layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/level ui/PanelContainer/MarginContainer"]
-layout_direction = 2
-layout_mode = 2
-size_flags_vertical = 0
-metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/level ui/PanelContainer/MarginContainer"]
 layout_mode = 2
@@ -91,13 +94,13 @@ layout_mode = 2
 [node name="CreditsLabel" type="Label" parent="UI/level ui/PanelContainer/MarginContainer/HBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "111
+text = "credits:
 "
 
 [node name="HealthLabel" type="Label" parent="UI/level ui/PanelContainer/MarginContainer/HBoxContainer/GridContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "111"
+text = "health:"
 
 [node name="money manager" type="Node" parent="." groups=["wants level resource"]]
 script = ExtResource("3_83um7")
@@ -140,7 +143,9 @@ layer_0/tile_data = PackedInt32Array(0, 1, 0, 1, 1, 0, 65538, 1, 0, 2, 1, 0, 655
 [node name="ProjectileManeger" type="Node" parent="LevelManeger"]
 unique_name_in_owner = true
 
-[connection signal="button_up" from="UI/level ui/Button" to="UI/level ui/Button" method="_on_button_up"]
-[connection signal="tower_1_button_pressed" from="UI/level ui/Button" to="LevelManeger/TowerManeger" method="_on_tower_button_pressed"]
+[connection signal="button_up" from="UI/level ui/MarginContainer/HBoxContainer/Button" to="UI/level ui/MarginContainer/HBoxContainer/Button" method="_on_button_up"]
+[connection signal="tower_1_button_pressed" from="UI/level ui/MarginContainer/HBoxContainer/Button" to="LevelManeger/TowerManeger" method="_on_tower_button_pressed"]
+[connection signal="button_up" from="UI/level ui/MarginContainer/HBoxContainer/Button2" to="UI/level ui/MarginContainer/HBoxContainer/Button2" method="_on_button_up"]
+[connection signal="tower_2_button_pressed" from="UI/level ui/MarginContainer/HBoxContainer/Button2" to="LevelManeger/TowerManeger" method="_on_tower_button_pressed"]
 [connection signal="timeout" from="LevelManeger/enemy maneger/spawn timer" to="LevelManeger/enemy maneger" method="_on_spawn_timer_timeout"]
 [connection signal="body_entered" from="LevelManeger/enemy maneger/enemyGoal/Area2D" to="LevelManeger/enemy maneger/enemyGoal" method="_on_area_2d_body_entered"]

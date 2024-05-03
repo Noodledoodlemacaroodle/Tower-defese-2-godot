@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Tower_data" load_steps=2 format=3 uid="uid://epdss7o2wgba"]
+
+[ext_resource type="Script" path="res://objects/towers/tower_data.gd" id="1_pjfdj"]
+
+[resource]
+script = ExtResource("1_pjfdj")
+Name = "Tower 2"
+tower_path = "res://objects/towers/tower 2/Scenes/tower_base2.tscn"
+tower_prevew_path = "res://objects/towers/tower 2/Scenes/tower_preview.tscn"
+tower_projectile_path = "res://objects/towers/tower 2/Scenes/projectile2.tscn"
+cost = 150
+radar_range = 20.0
+weapon_range = 0.0
+fire_rate = 1.0
+has_magazine = false
+magazine_size = 4
+reload_speed = 2
+aim_time = 1.0
+damage = 1
+size = 31
+base_level_required = 0
+projectile_parent = ""

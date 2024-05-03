@@ -1,0 +1,66 @@
+[gd_scene load_steps=11 format=3 uid="uid://dgp24nka0qe5l"]
+
+[ext_resource type="Script" path="res://objects/towers/tower 1/Scenes/tower_base.gd" id="1_jwlo5"]
+[ext_resource type="Texture2D" uid="uid://q4nnpbf7f8xj" path="res://tower art/tower base-Sheet.png" id="2_f8mpg"]
+[ext_resource type="Script" path="res://objects/towers/tower 1/code/tower_1.gd" id="3_m2say"]
+[ext_resource type="Resource" uid="uid://epdss7o2wgba" path="res://objects/towers/tower 2/other resources/tower_2_data.tres" id="4_qu6y2"]
+[ext_resource type="Texture2D" uid="uid://cw2aq2wlle0nx" path="res://objects/towers/tower 1/sprites/SPACE SHIP 1.png" id="5_rbgly"]
+[ext_resource type="Script" path="res://objects/towers/tower 1/code/FireControl.gd" id="6_icu64"]
+[ext_resource type="Script" path="res://objects/towers/tower 1/code/radar.gd" id="7_eabj6"]
+[ext_resource type="Script" path="res://objects/towers/tower 1/code/wepons.gd" id="8_wlu6s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jjja5"]
+radius = 19.23
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gtl3s"]
+radius = 124.0
+
+[node name="tower_base" type="Node2D" groups=["tower"]]
+modulate = Color(1, 0.588235, 0.592157, 1)
+script = ExtResource("1_jwlo5")
+
+[node name="tower_ body" type="Area2D" parent="."]
+collision_layer = 34
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tower_ body"]
+shape = SubResource("CircleShape2D_jjja5")
+
+[node name="TowerBase-sheet" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_f8mpg")
+hframes = 3
+
+[node name="turret" type="Node2D" parent="."]
+use_parent_material = true
+script = ExtResource("3_m2say")
+Tower_data = ExtResource("4_qu6y2")
+
+[node name="Sprite2D" type="Sprite2D" parent="turret"]
+z_index = 1
+rotation = -1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("5_rbgly")
+offset = Vector2(0, 7.5)
+hframes = 7
+
+[node name="FireControl" type="Node2D" parent="turret"]
+script = ExtResource("6_icu64")
+
+[node name="radar" type="Area2D" parent="turret/FireControl"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("7_eabj6")
+
+[node name="radar_collison" type="CollisionShape2D" parent="turret/FireControl/radar"]
+shape = SubResource("CircleShape2D_gtl3s")
+
+[node name="wepons" type="Node2D" parent="turret/FireControl"]
+script = ExtResource("8_wlu6s")
+
+[connection signal="start_fiering_sequence" from="turret/FireControl" to="turret/FireControl/wepons" method="start_fiering_sequence_started"]
+[connection signal="area_entered" from="turret/FireControl/radar" to="turret/FireControl" method="_on_radar_area_entered"]
+[connection signal="area_exited" from="turret/FireControl/radar" to="turret/FireControl" method="_on_radar_area_exited"]
+[connection signal="body_entered" from="turret/FireControl/radar" to="turret/FireControl" method="_on_radar_body_entered"]
+[connection signal="body_exited" from="turret/FireControl/radar" to="turret/FireControl" method="_on_radar_body_exited"]
+[connection signal="request_Tower_data" from="turret/FireControl/radar" to="turret" method="_on_request_tower_data"]

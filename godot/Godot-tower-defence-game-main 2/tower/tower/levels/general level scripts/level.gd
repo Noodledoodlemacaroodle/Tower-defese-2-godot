@@ -4,7 +4,7 @@ extends Node2D
 @onready var level_resourse: Resource = load("res://levels/level resourses/curent_level_resourse.tres")
 @export var level_resourse_data: Resource
 
-
+var game_maneger
 
 func _ready():
 	_reset_level_resourse()
@@ -30,7 +30,8 @@ func _ready():
 func _reset_level_resourse():
 	level_resourse.health = level_resourse_data.health
 	level_resourse.credits = level_resourse_data.credits
-	
+
+
 
 func _on_request_level_resourse(reciver):
 	reciver.level_resourse = level_resourse
@@ -47,3 +48,7 @@ func _process(_delta):
 
 
 
+
+
+func _on_tower_button_pressed(tower_resource):
+	pass # Replace with function body.

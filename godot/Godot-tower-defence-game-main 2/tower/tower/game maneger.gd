@@ -8,9 +8,11 @@ func _ready():
 
 
 
-func _start_game():
-	get_tree().paused = false
 
+func _start_game():
+	curent_level.game_maneger = self
+	get_tree().paused = false
+	%Timer.start
 
 
 
@@ -31,7 +33,7 @@ func _restart_game():
 	var child = curent_level
 	child.queue_free()
 	var level = load("res://levels/level_test.tscn")
-	var instance = level.instantiate()
+	var instance =  level.instantiate()
 	add_child(instance)
 	curent_level = instance
 

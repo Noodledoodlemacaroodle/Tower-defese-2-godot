@@ -1,7 +1,7 @@
 extends Node2D
 
 
-class_name  Projectile
+
 
 const SPEED = 1500
 var damage = 20

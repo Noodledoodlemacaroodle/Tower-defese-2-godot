@@ -2,7 +2,7 @@ extends Button
 
 
 
-@onready var Tower_data: Resource = preload("res://objects/towers/tower 1/other resources/tower_1_data.tres")
+@export var Tower_data: Resource
 
 
 signal tower_1_button_pressed(tower_resource)

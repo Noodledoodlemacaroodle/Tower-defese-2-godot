@@ -27,7 +27,11 @@ folder_colors={
 "res://objects/towers/tower 1/Scenes/": "red",
 "res://objects/towers/tower 1/code/": "teal",
 "res://objects/towers/tower 1/other resources/": "orange",
-"res://objects/towers/tower 1/sprites/": "blue"
+"res://objects/towers/tower 1/sprites/": "blue",
+"res://objects/towers/tower 2/Scenes/": "red",
+"res://objects/towers/tower 2/code/": "teal",
+"res://objects/towers/tower 2/other resources/": "yellow",
+"res://objects/towers/tower 2/sprites/": "blue"
 }
 
 [input]
@@ -40,6 +44,11 @@ tower_1_hot_key={
 escape={
 "deadzone": 0.5,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194305,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
+tower_2_hot_key={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":50,"key_label":0,"unicode":50,"echo":false,"script":null)
 ]
 }
 

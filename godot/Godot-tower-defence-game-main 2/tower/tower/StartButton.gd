@@ -11,5 +11,7 @@ func _ready():
 
 
 func _on_button_up():
+	
+	%Guide.hide()
 	%"GameManeger"._start_game()
-	self.hide()
+
